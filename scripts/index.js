@@ -26,9 +26,13 @@
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
-function createPlaylistElement({ id, name, songs }) {
-    const children = []
-    const classes = []
+ function createPlaylistElement({ id, name, songs }) {
+    const children = [
+        createElement("h2", name, ["inline"], {}),
+        createElement("h2", songs.length, ["inline"], {}),
+        createElement("h2", playlistDuration(id), ["inline"], {}),
+    ]
+    const classes = ["playlists"]
     const attrs = {}
     return createElement("div", children, classes, attrs)
 }
