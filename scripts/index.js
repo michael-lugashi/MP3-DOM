@@ -50,3 +50,17 @@ function createElement(tagName, children = [], classes = [], attributes = {}) {
 }
 
 // You can write more code below this line
+
+function changeHtml() {
+    const songsHtml = document.getElementById("songs")
+    const playliststHtml = document.getElementById("playlists")
+    player.playlists.sort((playlistA, playlistB) => playlistA.name.localeCompare(playlistB.name))
+    player.songs.sort((SongA, SongB) => SongA.title.localeCompare(SongB.title))
+    for (let song of player.songs) {
+        songsHtml.appendChild(createSongElement(song))
+    }
+    for (let playlist of player.playlists) {
+        playliststHtml.appendChild(createPlaylistElement(playlist))
+    }
+}
+changeHtml()
