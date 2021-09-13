@@ -4,9 +4,17 @@
  *
  * @param {String} songId - the ID of the song to play
  */
+ let wasPlaying
  function playSong(songId) {
-    // Your code here
-}
+     if (wasPlaying !== undefined) {
+         wasPlaying.style.borderLeft = "cornsilk solid 2px"
+         wasPlaying.style.backgroundColor = "rgba(255, 248, 220, 0.4)"
+     }
+     const playing = document.getElementById(songId)
+     playing.style.borderLeft = "red solid 4px"
+     playing.style.backgroundColor = "rgba(255, 248, 220, 0.8)"
+     wasPlaying = playing
+ }
 
 /**
  * Creates a song DOM element based on a song object.
@@ -26,7 +34,7 @@
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
- function createPlaylistElement({ id, name, songs }) {
+function createPlaylistElement({ id, name, songs }) {
     const children = [
         createElement("h2", name, ["inline"], {}),
         createElement("h2", songs.length, ["inline"], {}),
