@@ -4,22 +4,22 @@
  *
  * @param {String} songId - the ID of the song to play
  */
- let wasPlaying
- function playSong(songId) {
-     if (wasPlaying !== undefined) {
-         wasPlaying.style.borderLeft = "cornsilk solid 2px"
-         wasPlaying.style.backgroundColor = "rgba(255, 248, 220, 0.4)"
-     }
-     const playing = document.getElementById(songId)
-     playing.style.borderLeft = "red solid 4px"
-     playing.style.backgroundColor = "rgba(255, 248, 220, 0.8)"
-     wasPlaying = playing
- }
+let wasPlaying
+function playSong(songId) {
+    if (wasPlaying !== undefined) {
+        wasPlaying.style.borderLeft = "cornsilk solid 2px"
+        wasPlaying.style.backgroundColor = "rgba(255, 248, 220, 0.4)"
+    }
+    const playing = document.getElementById(songId)
+    playing.style.borderLeft = "red solid 4px"
+    playing.style.backgroundColor = "rgba(255, 248, 220, 0.8)"
+    wasPlaying = playing
+}
 
 /**
  * Creates a song DOM element based on a song object.
  */
- function createSongElement({ id, title, album, artist, duration, coverArt }) {
+function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const children = [
         createElement("p", title, ["inline"], {}),
         createElement("p", album, ["inline"], {}),
@@ -57,7 +57,7 @@ function createPlaylistElement({ id, name, songs }) {
  * @param {Array} classes - the class list of the new element
  * @param {Object} attributes - the attributes for the new element
  */
- function createElement(tagName, children = [], classes = [], attributes = {}) {
+function createElement(tagName, children = [], classes = [], attributes = {}) {
     // Your code here
     // let placement = document.getElementById(songs);
     let element = document.createElement(tagName)
