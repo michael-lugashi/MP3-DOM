@@ -51,6 +51,23 @@ function createElement(tagName, children = [], classes = [], attributes = {}) {
 
 // You can write more code below this line
 
+function convertToMin(seconds) {
+    const min = Math.floor(seconds / 60)
+    const sec = seconds % 60
+    return `${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
+}
+function findIndex(id, location) {
+    // This finds the index of the given id in the specific location given.
+    return location.findIndex((listElement) => listElement.id === id)
+}
+
+function playlistDuration(id) {
+    let totalDuration = 0
+    const playlist = player.playlists[findIndex(id, player.playlists)]
+    playlist.songs.forEach((songId) => (totalDuration += player.songs[findIndex(songId, player.songs)].duration))
+    return convertToMin(totalDuration)
+}
+
 function changeHtml() {
     const songsHtml = document.getElementById("songs")
     const playliststHtml = document.getElementById("playlists")
