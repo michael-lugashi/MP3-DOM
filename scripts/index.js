@@ -11,13 +11,18 @@
 /**
  * Creates a song DOM element based on a song object.
  */
-function createSongElement({ id, title, album, artist, duration, coverArt }) {
-    const children = []
-    const classes = []
-    const attrs = { onclick: `playSong(${id})` }
+ function createSongElement({ id, title, album, artist, duration, coverArt }) {
+    const children = [
+        createElement("p", title, ["inline"], {}),
+        createElement("p", album, ["inline"], {}),
+        createElement("p", artist, ["inline"], {}),
+        createElement("p", convertToMin(duration), ["inline"], {}),
+        createElement("img", null, ["img-format"], { src: coverArt }),
+    ]
+    const classes = ["songs"]
+    const attrs = { onclick: `playSong(${id})`, id }
     return createElement("div", children, classes, attrs)
 }
-
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
