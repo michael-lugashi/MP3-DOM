@@ -55,7 +55,17 @@ function handleSongClickEvent(event) {
  * @param {MouseEvent} event - the click event
  */
 function handleAddSongEvent(event) {
-    // Your code here
+
+    song = {
+        id: createId(),
+        title: inputs.children[0].value,
+        album: inputs.children[1].value,
+        artist: inputs.children[2].value,
+        duration: inputs.children[3].value,
+        coverArt: inputs.children[4].value
+    }
+
+    addSong(song)
 }
 
 /**
@@ -144,6 +154,13 @@ function generatePlaylists() {
 }
 
 /* Functions that aid and aquire information for my about functions */
+function createId() {
+    let id =  Math.floor(Math.random() * 100)
+    while (findIndex(id, player.songs) > -1) {
+        id = Math.floor(Math.random() * 100)
+    }
+    return id;
+}
 
 function convertToMin(seconds) {
     const min = Math.floor(seconds / 60)
@@ -161,7 +178,6 @@ function playlistDuration(id) {
     playlist.songs.forEach((songId) => (totalDuration += player.songs[findIndex(songId, player.songs)].duration))
     return convertToMin(totalDuration)
 }
-
 
 // Creating the page structure
 generateSongs()
