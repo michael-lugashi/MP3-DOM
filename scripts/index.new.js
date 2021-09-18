@@ -35,8 +35,17 @@ function removeSong(songId) {
 /**
  * Adds a song to the player, and updates the DOM to match.
  */
-function addSong({ title, album, artist, duration, coverArt }) {
-    // Your code here
+function addSong({ id, title, album, artist, duration, coverArt }) {
+    // I add the song to the object of songs
+    player.songs.push({ id, title, album, artist, duration: convertToSec(duration), coverArt })
+    player.songs.sort((SongA, SongB) => SongA.title.localeCompare(SongB.title))
+
+    // I get all the songs in the DOM
+    const allSongs = document.querySelectorAll('.song')
+
+    // I find the index of the new song in the player and use it to find where it belongs in the DOM
+    const indexOfNewSong = findIndex(id, player.songs)
+    songs.insertBefore(createSongElement(player.songs[indexOfNewSong]), allSongs[indexOfNewSong])
 }
 
 /**
@@ -55,7 +64,7 @@ function handleSongClickEvent(event) {
  * @param {MouseEvent} event - the click event
  */
 function handleAddSongEvent(event) {
-
+    // I create the new song object with the values of all the inputs
     song = {
         id: createId(),
         title: inputs.children[0].value,
@@ -154,12 +163,15 @@ function generatePlaylists() {
 }
 
 /* Functions that aid and aquire information for my about functions */
-function createId() {
-    let id =  Math.floor(Math.random() * 100)
-    while (findIndex(id, player.songs) > -1) {
+function createId(id) {
+    while (id === undefined || findIndex(id, player.songs) > -1) {
         id = Math.floor(Math.random() * 100)
     }
-    return id;
+    return id
+}
+
+function convertToSec(minutes) {
+    return Number(minutes.slice(0, 2)) * 60 + Number(minutes.slice(3, 5))
 }
 
 function convertToMin(seconds) {
