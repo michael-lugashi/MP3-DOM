@@ -41,7 +41,7 @@ function addSong({ id, title, album, artist, duration, coverArt }) {
     player.songs.sort((SongA, SongB) => SongA.title.localeCompare(SongB.title))
 
     // I get all the songs in the DOM
-    const allSongs = document.querySelectorAll('.song')
+    const allSongs = document.querySelectorAll(".song")
 
     // I find the index of the new song in the player and use it to find where it belongs in the DOM
     const indexOfNewSong = findIndex(id, player.songs)
@@ -65,7 +65,7 @@ function handleSongClickEvent(event) {
  */
 function handleAddSongEvent(event) {
     // I create the new song object with the values of all the inputs
-    song = {
+    const song = {
         id: createId(),
         title: inputs.children[0].value,
         album: inputs.children[1].value,
@@ -86,7 +86,14 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
     const albumEL = createElement("p", [album], ["width"])
     const artistEl = createElement("p", [artist], ["width"])
     const durEl = createElement("p", [convertToMin(duration)], ["width"])
-    return createElement("div", [coverEl, titleEl, albumEL, artistEl, durEl], ["song"], {
+    const playBtnEl = createElement("button", ["🥁"], [])
+    const delBtnEl = createElement("button", ["❌"], [])
+    const btns = createElement(
+        "span",
+        [createElement("button", ["🥁"], ["btn"]), createElement("button", ["❌"], ["btn"])],
+        ["btns"]
+    )
+    return createElement("div", [coverEl, titleEl, albumEL, artistEl, durEl, btns], ["song"], {
         onclick: `playSong(${id})`,
         id: `song${id}`,
     })
