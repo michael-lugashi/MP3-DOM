@@ -9,8 +9,14 @@ body {
     text-decoration: underline;
     color: cornsilk;
     font-size: 40px;
+    font-family: 'RocknRoll One', Arial;
 }
-
+h2 {
+    text-align: center;
+    color: cornsilk;
+    font-size: 28px;
+    font-family: 'RocknRoll One', Arial;
+}
 .song {
     margin: auto;
     width: 500px;
@@ -36,6 +42,8 @@ body {
     justify-content: space-around;
     align-items: center;
     font-family: 'RocknRoll One', Arial;
+    font-size: 30px;
+    font-weight: bold;
 }
 .img-format {
     height: 100%;
