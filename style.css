@@ -1,14 +1,29 @@
 /* Your code here */
+@import url('https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap');
 body {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(138, 8, 8, 0.9));
+    
 }
-.songs {
+#title {
+    text-align: center;
+    text-decoration: underline;
+    color: cornsilk;
+    font-size: 40px;
+}
+
+.song {
     margin: auto;
     width: 500px;
     height: 60px;
     border: cornsilk solid 2px;
-    background-color: rgba(255, 248, 220, 0.4);
+    background-image: linear-gradient(to right, rgba(138, 8, 8, 0.9), rgba(0, 0, 0, 0.95));
+    color: cornsilk;
     margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-family: 'RocknRoll One', Arial;
 }
 .playlists {
     margin: auto;
@@ -17,23 +32,20 @@ body {
     border: cornsilk solid 2px;
     background-color: rgba(255, 248, 220, 0.4);
     margin-top: 16px;
-    text-align: center;
-}
-#title {
-    text-align: center;
-    text-decoration: underline;
-    color: cornsilk;
-    font-size: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'RocknRoll One', Arial;
 }
 .img-format {
     height: 100%;
-    float: right;
 }
-.inline {
-    margin-right: 5px;
-    display: inline;
+.width {
+    width: 80px;
 }
-.selected {
+.songSelected {
     border-left: red solid 4px;
-    background-color: rgba(255, 248, 220, 0.8);
+    background-image: linear-gradient(to right, cornsilk, rgba(179, 147, 5, 0.95));
+    color: black;
 }
+

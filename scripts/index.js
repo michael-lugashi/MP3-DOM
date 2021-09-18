@@ -4,45 +4,56 @@
  *
  * @param {String} songId - the ID of the song to play
  */
-let wasPlaying
-function playSong(songId) {
-    if (wasPlaying !== undefined) {
-        wasPlaying.style.borderLeft = "cornsilk solid 2px"
-        wasPlaying.style.backgroundColor = "rgba(255, 248, 220, 0.4)"
+
+/* plays the next song automatically */
+function nextSong(songId) {
+    if (findIndex(songId, player.songs) + 1 < player.songs.length) {
+        const next = player.songs[findIndex(songId, player.songs) + 1].id
+        playSong(next)
+    } else {
+        const lastSong = document.getElementsByClassName("songSelected")
+        lastSong[0].classList.remove("songSelected")
     }
-    const playing = document.getElementById(songId)
-    playing.style.borderLeft = "red solid 4px"
-    playing.style.backgroundColor = "rgba(255, 248, 220, 0.8)"
-    wasPlaying = playing
+}
+
+/*  plays the song for its given length */
+function playSong(songId) {
+    const song = document.getElementById(`song${songId}`)
+    const lastSong = document.getElementsByClassName("songSelected")
+    if (lastSong[0]) lastSong[0].classList.remove("songSelected")
+    song.classList.add("songSelected")
+    setTimeout(nextSong, 1000 * player.songs[findIndex(songId, player.songs)].duration, songId)
+
 }
 
 /**
  * Creates a song DOM element based on a song object.
  */
+
 function createSongElement({ id, title, album, artist, duration, coverArt }) {
-    const children = [
-        createElement("p", title, ["inline"], {}),
-        createElement("p", album, ["inline"], {}),
-        createElement("p", artist, ["inline"], {}),
-        createElement("p", convertToMin(duration), ["inline"], {}),
-        createElement("img", null, ["img-format"], { src: coverArt }),
-    ]
-    const classes = ["songs"]
-    const attrs = { onclick: `playSong(${id})`, id }
-    return createElement("div", children, classes, attrs)
+    const coverEl = createElement("img", [], ["img-format"], { src: coverArt })
+    const titleEl = createElement("p", [title], ["width"])
+    const albumEL = createElement("p", [album], ["width"])
+    const artistEl = createElement("p", [artist], ["width"])
+    const durEl = createElement("p", [convertToMin(duration)], ["width"])
+    return createElement("div", [coverEl, titleEl, albumEL, artistEl, durEl], ["song"], {
+        onclick: `playSong(${id})`,
+        id: `song${id}`,
+    })
 }
+
 /**
  * Creates a playlist DOM element based on a playlist object.
  */
+
 function createPlaylistElement({ id, name, songs }) {
-    const children = [
-        createElement("h2", name, ["inline"], {}),
-        createElement("h2", songs.length, ["inline"], {}),
-        createElement("h2", playlistDuration(id), ["inline"], {}),
-    ]
-    const classes = ["playlists"]
-    const attrs = {}
-    return createElement("div", children, classes, attrs)
+    const nameEl = createElement("h2", [name], [])
+    const numSongs = createElement("h2", [`Songs: ${songs.length}`], [])
+    const playlistDurationEl = createElement("h2", [playlistDuration(id)], [], {})
+    return createElement("div", [nameEl, numSongs, playlistDurationEl], ["playlists"], {
+        onclick: `playPlaylist(${id})`,
+        id: `playlist${id}`,
+    })
 }
 
 /**
@@ -58,34 +69,35 @@ function createPlaylistElement({ id, name, songs }) {
  * @param {Object} attributes - the attributes for the new element
  */
 function createElement(tagName, children = [], classes = [], attributes = {}) {
-    // Your code here
-    // let placement = document.getElementById(songs);
+
+    // creates the element
     let element = document.createElement(tagName)
-    for (const classAtribute of classes) {
-        element.classList.add(classAtribute)
+
+    // adds all the classes to the element
+    for (const cls of classes) {
+        element.classList.add(cls)
     }
+    // adds attributes to the element
     for (const attribute in attributes) {
         element.setAttribute(attribute, attributes[attribute])
     }
-    if (Array.isArray(children)) {
-        for (const child of children) {
-            element.appendChild(child)
-        }
-    } else {
-        element.innerHTML = children
+    // adds all the children elements
+    for (const child of children) {
+        element.append(child)
     }
     return element
 }
 
 // You can write more code below this line
 
+/* Converts number seconds into string of min in correct format */
 function convertToMin(seconds) {
     const min = Math.floor(seconds / 60)
     const sec = seconds % 60
     return `${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
 }
+
 function findIndex(id, location) {
-    // This finds the index of the given id in the specific location given.
     return location.findIndex((listElement) => listElement.id === id)
 }
 
@@ -96,11 +108,16 @@ function playlistDuration(id) {
     return convertToMin(totalDuration)
 }
 
-function changeHtml() {
+/*  adds the html elements to the page  */
+function buildMp3() {
     const songsHtml = document.getElementById("songs")
     const playliststHtml = document.getElementById("playlists")
+
+    // sorts the songs and playlists objects by there names and titles respectively
     player.playlists.sort((playlistA, playlistB) => playlistA.name.localeCompare(playlistB.name))
     player.songs.sort((SongA, SongB) => SongA.title.localeCompare(SongB.title))
+
+    // creates elements for all the songs and playlists
     for (let song of player.songs) {
         songsHtml.appendChild(createSongElement(song))
     }
@@ -108,4 +125,5 @@ function changeHtml() {
         playliststHtml.appendChild(createPlaylistElement(playlist))
     }
 }
-changeHtml()
+buildMp3()
+
