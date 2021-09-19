@@ -28,7 +28,7 @@ function playSong(songId) {
 
     const songDom = document.getElementById(songId)
     songDom.classList.add("songSelected")
-    setTimeout(nextSong, 10 * songInPlayer.duration, songIdInPlayer)
+    setTimeout(nextSong, 1000 * songInPlayer.duration, songIdInPlayer)
 }
 
 /**
