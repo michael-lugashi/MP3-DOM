@@ -2,25 +2,33 @@
  * Plays a song from the player.
  * Playing a song means changing the visual indication of the currently playing song.
  *
- * @param {Number} songId - the ID of the song to play
+ * @param {Number} songIdInPlayer - the ID of the song to play
  */
 
-function nextSong(songId) {
-    if (findIndex(songId, player.songs) + 1 < player.songs.length) {
-        const next = player.songs[findIndex(songId, player.songs) + 1].id
-        playSong(next)
+// This calls the playSong Function on the next song
+function nextSong(songIdInPlayer) {
+    if (findIndex(songIdInPlayer, player.songs) + 1 < player.songs.length) {
+        const nextSongId = player.songs[findIndex(songIdInPlayer, player.songs) + 1].id
+        playSong('song' + nextSongId)
     } else {
         const lastSong = document.getElementsByClassName("songSelected")
         lastSong[0].classList.remove("songSelected")
     }
 }
 
+// This plays the song and lets it play for the duration of the song
 function playSong(songId) {
-    const song = document.getElementById(`song${songId}`)
+    
+    const songIdInPlayer = idInPlayer(songId);
+    const songInPlayer = player.songs[findIndex(songIdInPlayer, player.songs)]
+
+
     const lastSong = document.getElementsByClassName("songSelected")
     if (lastSong[0]) lastSong[0].classList.remove("songSelected")
-    song.classList.add("songSelected")
-    setTimeout(nextSong, 1000 * player.songs[findIndex(songId, player.songs)].duration, songId)
+
+    const songDom = document.getElementById(songId)
+    songDom.classList.add("songSelected")
+    setTimeout(nextSong, 10 * songInPlayer.duration, songIdInPlayer)
 }
 
 /**
@@ -29,7 +37,19 @@ function playSong(songId) {
  * @param {Number} songId - the ID of the song to remove
  */
 function removeSong(songId) {
-    // Your code here
+
+    // removes songs from the player
+    player.songs.splice(findIndex(idInPlayer(songId), player.songs), 1)
+    player.playlists.forEach(playlist => playlist.songs = playlist.songs.filter(id => !(id === idInPlayer(songId))));
+
+    // removes songs from the DOM
+    document.getElementById(songId).remove()
+    let playlists = document.querySelectorAll('.playlists')
+    for (let rem of playlists) {
+        rem.remove()
+    }
+    generatePlaylists()
+
 }
 
 /**
@@ -55,7 +75,11 @@ function addSong({ id, title, album, artist, duration, coverArt }) {
  * @param {MouseEvent} event - the click event
  */
 function handleSongClickEvent(event) {
-    // Your code here
+    // The click event only performs a tast when a button is pressed.
+    if (event.target.tagName !== 'BUTTON') return;
+    // The task performed is dependent on what button is pressed
+    if (event.target.textContent === '❌') removeSong(event.target.closest('.song').id);
+    if (event.target.textContent === '🥁') playSong(event.target.closest('.song').id);
 }
 
 /**
@@ -93,10 +117,7 @@ function createSongElement({ id, title, album, artist, duration, coverArt }) {
         [createElement("button", ["🥁"], ["btn"]), createElement("button", ["❌"], ["btn"])],
         ["btns"]
     )
-    return createElement("div", [coverEl, titleEl, albumEL, artistEl, durEl, btns], ["song"], {
-        onclick: `playSong(${id})`,
-        id: `song${id}`,
-    })
+    return createElement("div", [coverEl, titleEl, albumEL, artistEl, durEl, btns], ["song"], {id: `song${id}`})
 }
 /**
  * Creates a playlist DOM element based on a playlist object.
@@ -105,10 +126,7 @@ function createPlaylistElement({ id, name, songs }) {
     const nameEl = createElement("span", [name], [])
     const numSongs = createElement("span", [`Songs: ${songs.length}`], [])
     const playlistDurationEl = createElement("span", [playlistDuration(id)], [], {})
-    return createElement("div", [nameEl, numSongs, playlistDurationEl], ["playlists"], {
-        onclick: `playPlaylist(${id})`,
-        id: `playlist${id}`,
-    })
+    return createElement("div", [nameEl, numSongs, playlistDurationEl], ["playlists"], { id: `playlist${id}`})
 }
 
 /**
@@ -170,6 +188,9 @@ function generatePlaylists() {
 }
 
 /* Functions that aid and aquire information for my about functions */
+function idInPlayer(songId){
+    return Number(songId.replace(/\D/g, ''))
+}
 function createId(id) {
     while (id === undefined || findIndex(id, player.songs) > -1) {
         id = Math.floor(Math.random() * 100)
@@ -204,3 +225,4 @@ generatePlaylists()
 
 // Making the add-song-button actually do something
 document.getElementById("add-button").addEventListener("click", handleAddSongEvent)
+songs.addEventListener('click', handleSongClickEvent)
