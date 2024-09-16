@@ -1,1 +1,97 @@
 /* Your code here */
+@import url("https://fonts.googleapis.com/css2?family=RocknRoll+One&display=swap");
+body {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(138, 8, 8, 0.9));
+}
+#title {
+    text-align: center;
+    text-decoration: underline;
+    color: cornsilk;
+    font-size: 40px;
+    font-family: "RocknRoll One", Arial;
+}
+h2 {
+    text-align: center;
+    color: cornsilk;
+    font-size: 28px;
+    font-family: "RocknRoll One", Arial;
+}
+.song {
+    margin: auto;
+    width: 500px;
+    height: 60px;
+    border: cornsilk solid 2px;
+    background-image: linear-gradient(to right, rgba(138, 8, 8, 0.9), rgba(0, 0, 0, 0.95));
+    color: cornsilk;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-family: "RocknRoll One", Arial;
+}
+.playlists {
+    margin: auto;
+    width: 500px;
+    height: 70px;
+    border: cornsilk solid 2px;
+    background-color: rgba(255, 248, 220, 0.4);
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: "RocknRoll One", Arial;
+    font-size: 30px;
+    font-weight: bold;
+}
+.img-format {
+    height: 100%;
+}
+.width {
+    width: 80px;
+    word-break: break-word;
+    hyphens: auto;
+}
+.songSelected {
+    border-left: red solid 4px;
+    background-image: linear-gradient(to right, cornsilk, rgba(179, 147, 5, 0.95));
+    color: black;
+}
+#inputs input {
+    background-color: rgb(0, 0, 0);
+    width: 48.4%;
+    font-family: "RocknRoll One", Arial;
+    color: cornsilk;
+    font-size: 15px;
+}
+#inputs {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    border: cornsilk solid 2px;
+    width: 500px;
+}
+#add-button {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    color: cornsilk;
+    background-color: black;
+    width: 300px;
+    font-family: "RocknRoll One", Arial;
+    font-size: 30px;
+}
+#inputs .fillWidth {
+    width: 100%;
+}
+.btn {
+    width: 50px;
+    background-color: rgb(255, 235, 155);
+    font-size: 16px;
+    border-width: 2px;
+    border-color: cornsilk;
+}
+.btns {
+    display: flex;
+    flex-direction: column;
+}

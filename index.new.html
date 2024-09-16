@@ -9,7 +9,7 @@
         <script src="./scripts/index.new.js" defer></script>
     </head>
     <body>
-        <h1>Awesome Player!!!</h1>
+        <h1  id="title">My MP3 player</h1>
         <div id="add-section">
             <h2>Add a new song</h2>
             <div id="inputs">
@@ -17,12 +17,12 @@
                 <input name="album" placeholder="Album">
                 <input name="artist" placeholder="Artist">
                 <input name="duration" placeholder="Duration (mm:ss)">
-                <input name="cover-art" placeholder="Cover art link">
+                <input class="fillWidth" name="cover-art" placeholder="Cover art link">
             </div>
-            <button id="add-button">Add</button>
+            <button id="add-button">Add Song</button>
         </div>
         <div id="songs">
-            <h2>Songs</h2>
+            <h2 class="headings">Songs</h2>
             <div class="list">
                 <!-- <div class="song">
                     <div class="left">
